@@ -20,16 +20,7 @@ struct States: View {
                 .padding(EdgeInsets(top: 2, leading: 8, bottom: 2, trailing: 8))
                 .border(Color.black)
                 
-                Button(action: {
-                    let new = Note(id: UUID(), note: self.entredText, dateTime: Date())
-                    items.append(new)
-                    self.entredText = ""
-                }, label: {
-                    Text("+")
-                        .font(.largeTitle)
-                        .foregroundColor(.blue)
-                        .bold()
-                })
+                AddButton(items: $items, entredText: $entredText)
             }.padding()
             
             List {
@@ -44,6 +35,25 @@ struct States: View {
 struct States_Previews: PreviewProvider {
     static var previews: some View {
         States()
+    }
+}
+
+struct AddButton: View {
+    
+    @Binding var items: [Note]
+    @Binding var entredText: String
+    
+    var body: some View {
+        Button(action: {
+            let new = Note(id: UUID(), note: self.entredText, dateTime: Date())
+            items.append(new)
+            self.entredText = ""
+        }, label: {
+            Text("+")
+                .font(.largeTitle)
+                .foregroundColor(.blue)
+                .bold()
+        })
     }
 }
 
